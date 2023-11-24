@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'myapp',
+    'rest_framework',
     'knox'
 ]
 
@@ -75,10 +76,32 @@ WSGI_APPLICATION = 'Construction.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'itce',
+#         'USER': 'hamzashahid',
+#         'PASSWORD': '1234',
+#         'HOST': '127.0.0.1',
+#         'PORT': '5432',
+#     }
+# }
+import os
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_NAME', 'itce'),
+        'USER': os.environ.get('POSTGRES_USER', 'hamzashahid'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '1234'),
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
@@ -123,3 +146,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+MEDIA_URL = "/media/"
+MEDIA_URL = os.path.join(BASE_DIR, "media/")

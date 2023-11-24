@@ -11,8 +11,8 @@ from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
 from knox.auth import TokenAuthentication
 
-from .models import get_or_none
-from .serializers import UserSerializer, RegisterSerializer, VerifyUserSerializer
+from .models import get_or_none, Technology
+from .serializers import UserSerializer, RegisterSerializer, VerifyUserSerializer, TechnologySerializer
 
 from django.contrib.auth.models import User
 
@@ -63,3 +63,15 @@ class UserVerify(APIView):
             return Response({'msg': 'ok'}, status=200)
 
         return Response({'msg': 'No user associated with this email or username!'}, status=200)
+
+
+class TechnologyView(APIView):
+    queryset = Technology.objects.all()
+    serializer_class = TechnologySerializer
+    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (TokenAuthentication,)
+
+    def get(self, request):
+        qs = Technology.objects.all()
+        return Response(self.serializer_class(qs, many=True).data, status=200)
+

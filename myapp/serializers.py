@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
+from myapp.models import Technology
+
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,3 +52,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 class VerifyUserSerializer(serializers.Serializer):
     email = serializers.CharField(required=False)
+
+
+class TechnologySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Technology
+        fields = ('title', 'icon')
