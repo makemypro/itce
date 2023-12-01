@@ -5,14 +5,45 @@ from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 
 ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg']
+SOCIAL_MEDIA_TYPE = (
+    ('instagram', 'instagram'), ('facebook', 'facebook'),
+    ('linkedin', 'linkedin'), ('youtube', 'youtube'),
+    ('twitter', 'twitter'), ('telegram', 'telegram'), ('skype', 'skype')
+)
+
+GENDER = (
+    ('male', 'male'),
+    ('female', 'female'),
+    ('other', 'other')
+)
+
+MARITAL_STATUS = (
+    ('single', 'single'), ('married', 'married'),
+    ('widowed', 'widowed'), ('divorced', 'divorced'),
+    ('separated', 'separated')
+)
+
+BLOOD_GROUP_CHOICES = (
+    ('A+', 'A+'), ('A-', 'A-'),
+    ('B+', 'B+'), ('B-', 'B-'),
+    ('AB+', 'AB+'), ('AB-', 'AB-'),
+    ('O+', 'O+'), ('O-', 'O-')
+)
 
 
 class UserProfile(models.Model):
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    father_name = models.CharField(max_length=255, null=True, blank=True)
+    mother_name = models.CharField(max_length=255, null=True, blank=True)
+    blood_group = models.CharField(max_length=255, choices=BLOOD_GROUP_CHOICES, null=True)
     title = models.CharField(max_length=255, null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
+    marital_status = models.CharField(max_length=255, choices=MARITAL_STATUS, null=True)
+    occupation = models.CharField(max_length=255, null=True, blank=True)
     phone_number = models.CharField(max_length=12, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     image = models.FileField(upload_to='static/images', null=True, blank=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user
@@ -113,6 +144,8 @@ class GlobalLocation(models.Model):
 
 
 class SocialMedia(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    typ = models.CharField(max_length=255, choices=SOCIAL_MEDIA_TYPE, null=True, blank=True)
     icon = models.FileField(upload_to='static/images', validators=[
         FileExtensionValidator(allowed_extensions=ALLOWED_EXTENSIONS)], default="")
     link = models.URLField(max_length=255, null=True, blank=True)
