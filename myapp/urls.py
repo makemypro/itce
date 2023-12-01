@@ -18,7 +18,8 @@ from django.urls import path
 from  .views import TechnologyView, RegisterUserAPIView, LoginAPI, UserVerify
 
 urlpatterns = [
-    path('', RegisterUserAPIView.as_view(), name='signup'),
+    path('', RegisterUserAPIView.as_view(), name='home'),
+    path('signup/', RegisterUserAPIView.as_view(), name='signup'),
     path('login/', LoginAPI.as_view(), name='login'),
     path('user-verification/', UserVerify.as_view(), name='user-verification'),
     path('technology/', TechnologyView.as_view(), name='technology')

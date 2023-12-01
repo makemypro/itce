@@ -59,3 +59,9 @@ class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
         model = Technology
         fields = ('title', 'icon')
+
+
+class UserProfile(serializers.ModelSerializer):
+
+    class Meta:
+        fields = '__all__'
